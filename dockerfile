@@ -1,5 +1,9 @@
 FROM centos:7
-RUN yum install httpd -y
-RUN echo "<h1> HELLO WORLD" >/var/www/html/index.html
-CMD httpd -D FOREGROUND
+
+RUN yum install -y httpd
+
+RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
+
 EXPOSE 80
+
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
