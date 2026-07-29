@@ -22,7 +22,7 @@ docker rm -f docker ps -q "remove all running cont"
 
 docker create  "create the container"
 
-docker start "start cont"
+docker start "start container"
 
 cat /proc/meminfo "memory info "
 
