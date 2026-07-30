@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install -y httpd
+RUN dnf install -y httpd
 
 RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
 
