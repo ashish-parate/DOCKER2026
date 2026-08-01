@@ -1,9 +1,18 @@
-FROM quay.io/centos/centos:stream9
+FROM nginx:1.19.0-alpine
 
-RUN dnf install httpd -y
+LABEL maintainer="mritd <mritd@linux.com>"
 
-RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
+ARG TZ='Asia/Shanghai'
+ENV TZ ${TZ}
 
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+RUN apk upgrade --update \
+    && apk add bash tzdata curl wget ca-certificates \
+    && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
+    && rm -rf /usr/share/nginx/html /var/cache/apk/*
 
-EXPOSE 80
+COPY landscape-animation-experiment /usr/share/nginx/html
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
