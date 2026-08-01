@@ -1,9 +1,36 @@
 FROM quay.io/centos/centos:stream9
 
-RUN dnf install httpd -y
+RUN dnf install -y httpd && dnf clean all
 
-RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
+RUN mkdir -p /var/www/html
 
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+RUN cat > /var/www/html/index.html <<EOF
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Entry</title>
+</head>
+<body>
+    <h1>Student Entry Form</h1>
+    <form>
+        <label>Student ID:</label><br>
+        <input type="text" name="sid"><br><br>
+
+        <label>Student Name:</label><br>
+        <input type="text" name="sname"><br><br>
+
+        <label>Department:</label><br>
+        <input type="text" name="dept"><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+EOF
 
 EXPOSE 80
+
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
