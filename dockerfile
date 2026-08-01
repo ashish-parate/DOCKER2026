@@ -1,7 +1,10 @@
-FROM httpd:2.4
+FROM centos
 
-RUN echo "<h1>HELLO WORLD</h1>" > /usr/local/apache2/htdocs/index.html
+RUN yum install httpd -y
+
+RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
+
+CMD httpd -DFOREGROUND
 
 EXPOSE 80
 
-CMD ["httpd-foreground"]
