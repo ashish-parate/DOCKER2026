@@ -1,10 +1,9 @@
-FROM centos
+FROM quay.io/centos/centos:stream9
 
-RUN yum install httpd -y
+RUN dnf install httpd -y
 
 RUN echo "<h1>HELLO WORLD</h1>" > /var/www/html/index.html
 
-CMD httpd -DFOREGROUND
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
 EXPOSE 80
-
