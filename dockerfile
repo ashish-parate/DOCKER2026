@@ -14,7 +14,7 @@ WORKDIR /var/www/html
 COPY index.html .
 
 ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/index.html sample/index.html
-
+RUN chmod -R 755 /var/www/html/sample
 EXPOSE 80
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
