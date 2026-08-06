@@ -1,36 +1,24 @@
 FROM quay.io/centos/centos:stream9
 
-RUN dnf install -y httpd && dnf clean all
+LABEL maintainer="ashish"
 
-RUN mkdir -p /var/www/html
+ENV name="ashishp"
 
-RUN cat > /var/www/html/index.html <<EOF
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Entry</title>
-</head>
-<body>
-    <h1>Student Entry Form</h1>
-    <form>
-        <label>Student ID:</label><br>
-        <input type="text" name="sid"><br><br>
+RUN dnf -y update && \
+    dnf -y install httpd && \
+    mkdir  /var/www/sample
+    
 
-        <label>Student Name:</label><br>
-        <input type="text" name="sname"><br><br>
+WORKDIR /var/www/html
 
-        <label>Department:</label><br>
-        <input type="text" name="dept"><br><br>
+USER root
 
-        <label>Email:</label><br>
-        <input type="email" name="email"><br><br>
+COPY index.html /var/www/html/index.html
 
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
-EOF
+ADD https://templatemo.com/download/templatemo_630_helix_drift /var/www/sample  
+
+CMD ["httpd", "-D", "FOREGROUND"]
+
+ENTRYPOINT [ "httpd","-D", "FOREGROUND" ]
 
 EXPOSE 80
-
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
