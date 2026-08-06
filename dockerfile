@@ -7,11 +7,13 @@ ENV NAME="ashishp"
 RUN dnf -y update && \
     dnf -y install httpd && \
     dnf clean all && \
-    mkdir -p /var/www/sample
+    mkdir -p /var/www/html/sample
 
 WORKDIR /var/www/html
 
 COPY index.html .
+
+ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/index.html sample/index.html
 
 EXPOSE 80
 
