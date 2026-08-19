@@ -18,6 +18,8 @@ RUN wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.57/bin/apache-tomcat-${
 # Working directory
 WORKDIR /opt/apache-tomcat
 
+COPY student.html webapps/ROOT/index.html
+
 # Tomcat port
 EXPOSE 8080
 
