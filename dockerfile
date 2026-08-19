@@ -2,19 +2,24 @@ FROM quay.io/centos/centos:stream9
 
 LABEL maintainer="ashish"
 
-ENV NAME="ashishp"
+# Install Java and required tools
+RUN dnf install -y java-17-openjdk wget tar \
+    && dnf clean all
 
-RUN dnf -y update && \
-    dnf -y install httpd && \
-    dnf clean all && \
-    mkdir -p /var/www/html/sample
+# Tomcat version
+ENV TOMCAT_VERSION=10.1.57
 
-WORKDIR /var/www/html
+# Download and install Tomcat
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.57/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \
+    && tar -xzf apache-tomcat-${TOMCAT_VERSION}.tar.gz \
+    && mv apache-tomcat-${TOMCAT_VERSION} /opt/apache-tomcat \
+    && rm -f apache-tomcat-${TOMCAT_VERSION}.tar.gz
 
-COPY index.html .
+# Working directory
+WORKDIR /opt/apache-tomcat
 
-ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/index.html sample/index.html
-RUN chmod -R 755 /var/www/html/sample
-EXPOSE 80
+# Tomcat port
+EXPOSE 8080
 
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+# Start Tomcat
+CMD ["./bin/catalina.sh", "run"]
