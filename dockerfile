@@ -21,5 +21,5 @@ WORKDIR /opt/apache-tomcat
 # Tomcat port
 EXPOSE 8080
 
-# Start Tomcat
+# Start Tomcat .
 CMD ["./bin/catalina.sh", "run"]
