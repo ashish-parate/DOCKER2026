@@ -8,7 +8,7 @@ RUN dnf install -y java-17-openjdk java-17-openjdk-devel wget tar \
     && dnf clean all \
     && rm -rf /var/cache/dnf
 WORKDIR /opt/apache-tomcat
-COPY student.war ${CATALINA_HOME}/webapps/student.war
+COPY student.war ./webapps/
 # Set JAVA_HOME to the installed JDK
 RUN JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java)))) \
     && echo "JAVA_HOME=$JAVA_HOME" \
