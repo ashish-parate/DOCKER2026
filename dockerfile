@@ -24,7 +24,7 @@ RUN wget -O /tmp/tomcat.tar.gz \
     && rm -f /tmp/tomcat.tar.gz
 
 # Deploy application
-COPY student.war ${CATALINA_HOME}/webapps/
+COPY student.war ./webapps/
 
 EXPOSE 8080
 
